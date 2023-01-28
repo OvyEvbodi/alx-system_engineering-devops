@@ -1,5 +1,5 @@
- #!/usr/bin/env bash
-# Does the following:
+#!/usr/bin/env bash
+#   Does the following:
 #   creates a file /var/run/myscript.pid containing the script PID.
 #   displays "To infinity and beyond" indefinitely
 #   displays "I hate the kill command" upon receiving a SIGTERM
