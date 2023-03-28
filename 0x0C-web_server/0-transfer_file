@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Transfers a file from a client to a server
+# "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY\n"
+
+usage() {
+    echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY\n"
+    exit 1
+}
+
+if [ "$#" -ne 4 ]; then
+  usage
+else
+  echo "starting file transfer";
+
+  file_path=$1;
+  server_ip=$2;
+  user=$3;
+  private_key_path=$4;
+
+  scp -i "$private_key_path" -o StrictHostKeyChecking=no "$file_path" "$user@$server_ip:~";
+  if [ "$?" -eq 0 ]; then
+    echo "File transfer completed";
+  else
+    echo "Error transferring file";
+  fi
+fi
