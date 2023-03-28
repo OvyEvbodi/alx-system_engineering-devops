@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Install nginx on a server, and serve a simple html page
+# with the text "Hello World!"
+
+sudo apt-get update;
+
+sudo apt-get install -y nginx;
+
+sudo ufw allow "Nginx HTTP";
+
+# restart nginx
+sudo /usr/sbin/nginx -s reload;
+
+sudo sh -c 'echo "Hello World!" > /var/www/html/index.nginx-debian.html';
