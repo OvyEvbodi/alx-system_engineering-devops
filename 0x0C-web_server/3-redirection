@@ -7,8 +7,8 @@ sudo apt-get install -y nginx > /dev/null 2>&1;
 
 sudo ufw allow "Nginx HTTP" > /dev/null 2>&1;
 
-sed -i 's/\s*listen;/        listen 80;/g' dummy_server.txt;
-sed -i "s/\s*server_name _;/        server_name ukonicode.tech www.ukonicode.tech\n        rewrite ^\/redirect_me$ https:\/\/google.com permanent;/g" dummy_server.txt;
+sed -i 's/\s*listen;/        listen 80;/g' /etc/nginx/sites-available/default;
+sed -i "s/\s*server_name _;/        server_name ukonicode.tech www.ukonicode.tech\n        rewrite ^\/redirect_me$ https:\/\/google.com permanent;/g" /etc/nginx/sites-available/default;
 
 # restart nginx
 sudo service nginx restart;
