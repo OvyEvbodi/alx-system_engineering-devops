@@ -13,6 +13,10 @@ done
 sudo ufw allow "Nginx HTTP" > /dev/null 2>&1;
 sudo ufw allow 80/tcp > /dev/null 2>&1;
 
+# Customize home page
+sudo rm /var/www/html/index.html
+echo "Hello World!" | cat > /var/www/html/index.html
+
 #change ownership of config file's directory to allow editing 
 sudo chown ubuntu /etc/nginx/sites-available;
 
