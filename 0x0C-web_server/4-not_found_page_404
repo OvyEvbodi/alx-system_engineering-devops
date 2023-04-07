@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Configures an Nginx server so that '/redirect_me'  redirects to another page
+# Configures an Nginx server to have a custom 404 page that contains the string Ceci n'est pas une page
 
 sudo apt-get update > /dev/null 2>&1;
 sudo apt-get install -y nginx > /dev/null 2>&1;
@@ -21,6 +21,15 @@ sudo service nginx start;
 # configure server
 sed -i 's/\s*listen;/        listen 80;/g' /etc/nginx/sites-available/default;
 sed -i "s/\s*server_name _;/        server_name ukonicode.tech www.ukonicode.tech;\n        rewrite ^\/redirect_me\/?$ http:\/\/www.google.com permanent;/g" /etc/nginx/sites-available/default;
+
+# change ownership of the html directory
+sudo chown ubuntu /var/www/html 
+
+# create a custom 404 html page
+sudo echo "Ceci n'est pas une page" | cat > /var/www/html/404.html
+
+#add the route to the 404 file
+sed -i 's/\s*try_files $uri $uri\/ =404;/        try_files $uri $uri\/ =404;\n         error_page 404 \/404.html;/g' /etc/nginx/sites-available/default;
 
 # restart nginx
 sudo nginx -s reload;
