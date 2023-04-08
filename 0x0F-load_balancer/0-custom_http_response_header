@@ -27,7 +27,6 @@ sudo chown ubuntu /etc/nginx/sites-available;
 sudo service nginx start;
 
 # configure server
-host=$(hostname)
 sed -i 's/^\s*listen;/\tlisten 80;/g' /etc/nginx/sites-available/default;
 sed -i "s/^\s*server_name _;/\tserver_name ukonicode.tech www.ukonicode.tech;\n\trewrite ^\/redirect_me\/?$ http:\/\/www.google.com permanent;/g" /etc/nginx/sites-available/default;
 
@@ -38,7 +37,7 @@ sudo chown ubuntu /var/www/html
 sudo echo "Ceci n'est pas une page" | cat > /var/www/html/404.html
 
 #add the route to the 404 file
-sed -i 's/^\s*try_files $uri $uri\/ =404;/\ttry_files $uri $uri\/ =404;\n\terror_page 404 \/404.html;\n\tadd_header X-Served-By \"$host\";/g' /etc/nginx/sites-available/default;
+sed -i 's/^\s*try_files $uri $uri\/ =404;/\ttry_files $uri $uri\/ =404;\n\terror_page 404 \/404.html;\n\tadd_header X-Served-By \"${hostname}\";/g' /etc/nginx/sites-available/default;
 
 # restart nginx
 sudo nginx -s reload;
