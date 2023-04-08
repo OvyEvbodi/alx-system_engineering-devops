@@ -1,0 +1,23 @@
+# Configure an ubuntu server to use HAproxy as a load balancer
+sudo apt-get install haproxy > /dev/null 2>&1;
+sudo apt-get install -y haproxy > /dev/null 2>&1;
+
+sudo chown ubuntu /etc/default/haproxy;
+echo "ENABLED=1" | sudo cat >> /etc/default/haproxy;
+
+# configure HAproxy
+sudo chown ubuntu /etc/haproxy/haproxy.cfg
+echo "
+frontend ukonicode_fe
+    mode http
+    bind :80
+    default_backend ukonicode_be
+
+backend ukonicode_be
+    mode http
+    balance roundrobin
+    server 147331-web-01 18.208.119.54:80 check
+    server 147331-web-02 34.232.67.132:80 check " | cat >> /etc/haproxy/haproxy.cfg;
+
+# start HAproxy
+ sudo service haproxy start;
