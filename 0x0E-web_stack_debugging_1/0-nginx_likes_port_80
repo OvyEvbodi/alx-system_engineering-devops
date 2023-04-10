@@ -2,6 +2,10 @@
 # Find out what’s keeping an Ubuntu container’s Nginx
 # installation from listening on port 80
 
-sed -i 's/\s*listen 8080 default_server;/\tlisten 80 default_server;/g' /etc/nginx/sites-enabled/default
-service nginx restart
-pkill -o nginx
+sed -i 's/\s*listen 8080 default_server;/\tlisten 80 default_server;/' /etc/nginx/sites-enabled/default;
+apt-get install lsof > /dev/null 2>&1;
+touch /tmp/ps_file
+service nginx start;
+lsof -i tcp:8080 | awk '8080{print $2}' | grep "[0-9]" -m 1 | cat > /tmp/ps_file;
+pkill -F /tmp/ps_file;
+rm /tmp/ps_file
