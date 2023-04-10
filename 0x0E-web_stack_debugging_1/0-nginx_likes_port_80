@@ -2,10 +2,21 @@
 # Find out what’s keeping an Ubuntu container’s Nginx
 # installation from listening on port 80
 
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default;
-apt-get install lsof > /dev/null 2>&1;
-touch /tmp/ps_file;
-lsof -i tcp:8080 | awk '8080{print $2}' | grep "[0-9]" -m 1 | cat > /tmp/ps_file;
-pkill -F /tmp/ps_file;
-rm /tmp/ps_file;
+# update package index
+apt update &>/dev/null;
+
+# install lsof a helpful and easy to use tool
+if ! which lsof &>/dev/null; then
+    apt install lsof -y &>/dev/null;
+fi
+
+# delete bugged file
+rm /etc/nginx/sites-enabled/default;
+
+# create a symlink to the default file in sites-available directory instead
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default;
+
+# try to stop and start nginx
+service nginx stop &>/dev/null;
+
 service nginx start;
