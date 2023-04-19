@@ -2,8 +2,8 @@
 # Create a compressed backup file for all databases on a server
 
 date_form=$(date +"%d-%m-%Y")
-archive='$date_form.tar.gz'
+archive=$date_form.tar.gz
 password=$1
 file='backup.sql'
 sudo mysqldump -p '$password' --all-databases > $file;
-tar -cvzf '$archive' $file
+tar -cvzf $archive $file
