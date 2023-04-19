@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Configue Nginx to run as the ``nginx`` user
+
+chmod 600 /etc/nginx/nginx.conf
+sed -i 's/#user www-data/user nginx/' /etc/nginx/nginx.conf 
+service nginx restart > /dev/null 2>&1
