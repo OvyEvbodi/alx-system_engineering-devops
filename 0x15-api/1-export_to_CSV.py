@@ -28,7 +28,7 @@ def getTodos():
             for todo in response_todo:
                 writer.writerow([user_id, username, todo.get("completed"),
                                 todo.get("title")])
-  
+
 
 if __name__ == '__main__':
     getTodos()
