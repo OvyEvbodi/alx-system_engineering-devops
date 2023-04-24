@@ -5,6 +5,7 @@
 from requests import get
 from sys import argv
 
+
 def getTodos():
     """Gets an employee's todo data using an API"""
 
@@ -27,6 +28,7 @@ def getTodos():
               .format(name, no_of_completed_tasks, total_no_of_tasks))
         for task in completed_tasks:
             print("\t {}".format(task.get("title")))
+
 
 if __name__ == '__main__':
     getTodos()
