@@ -25,7 +25,7 @@ def getTodos():
         path = "{}.json".format(user_id)
         with open(path, 'w') as file:
             tasks_list = [{"task": "{}".format(todo.get("title")),
-                          "completed": "{}".format(todo.get("completed")),
+                          "completed": todo.get("completed"),
                            "username": "{}"
                            .format(username)} for todo in response_todo]
             tasks_dict = {"{}".format(user_id): tasks_list}
